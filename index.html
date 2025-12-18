@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memo Estratégico de Producto | Monitor de Cumplimiento SOX</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ========================================
+           SIMETRIK-INSPIRED COLOR PALETTE
+           Teal/Turquoise primary + Purple accents
+           Clean, modern fintech aesthetic
+        ======================================== */
+        :root {
+            /* Primary Colors - Teal/Turquoise */
+            --color-primary: #00BFA6;
+            --color-primary-dark: #00A896;
+            --color-primary-light: #64DFDF;
+            --color-primary-subtle: rgba(0, 191, 166, 0.1);
+            --color-primary-glow: rgba(0, 191, 166, 0.25);
+            
+            /* Secondary Colors - Purple */
+            --color-secondary: #7C3AED;
+            --color-secondary-light: #A78BFA;
+            --color-secondary-subtle: rgba(124, 58, 237, 0.1);
+            
+            /* Backgrounds */
+            --color-bg: #FAFBFC;
+            --color-bg-white: #FFFFFF;
+            --color-bg-elevated: #F3F4F6;
+            --color-bg-dark: #111827;
+            
+            /* Text */
+            --color-text: #374151;
+            --color-text-secondary: #6B7280;
+            --color-text-heading: #111827;
+            --color-text-light: #9CA3AF;
+            
+            /* Borders */
+            --color-border: #E5E7EB;
+            --color-border-light: #F3F4F6;
+            
+            /* Status */
+            --color-success: #10B981;
+            --color-warning: #F59E0B;
+            --color-danger: #EF4444;
+            
+            /* Typography */
+            --font-display: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --font-body: 'Inter', -apple-system, sans-serif;
+            
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+            
+            /* Radius */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* ========================================
+           BASE STYLES
+        ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ========================================
+           NAVIGATION
+        ======================================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--space-md) var(--space-xl);
+        }
+
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--color-text-heading);
+            text-decoration: none;
+        }
+
+        .nav-logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-xs);
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+            background: var(--color-primary-subtle);
+        }
+
+        /* ========================================
+           HERO SECTION
+        ======================================== */
+        .hero {
+            padding: 7rem var(--space-xl) var(--space-3xl);
+            background: linear-gradient(180deg, var(--color-bg-white) 0%, var(--color-bg) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--color-secondary-subtle) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: var(--space-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.9); }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: var(--color-text-heading);
+            line-height: 1.15;
+            margin-bottom: var(--space-lg);
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--color-text-secondary);
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ========================================
+           MAIN CONTENT
+        ======================================== */
+        .main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: var(--space-xl);
+        }
+
+        /* ========================================
+           SECTIONS
+        ======================================== */
+        .section {
+            margin-bottom: var(--space-3xl);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .section-number {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            background: var(--color-primary-subtle);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            letter-spacing: 0.05em;
+        }
+
+        .section h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text-heading);
+            letter-spacing: -0.01em;
+        }
+
+        .section h3 {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--color-text-heading);
+            margin: var(--space-xl) 0 var(--space-md);
+        }
+
+        .section p {
+            color: var(--color-text);
+            margin-bottom: var(--space-md);
+        }
+
+        /* ========================================
+           CARDS
+        ======================================== */
+        .card {
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-lg);
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-highlight {
+            border-color: var(--color-primary);
+            border-left-width: 4px;
+        }
+
+        /* ========================================
+           EXECUTIVE SUMMARY
+        ======================================== */
+        .executive-summary {
+            background: linear-gradient(135deg, var(--color-bg-white) 0%, var(--color-primary-subtle) 100%);
+            border: 1px solid var(--color-primary);
+            border-left-width: 4px;
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+
+        .executive-summary h4 {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--space-md);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+        }
+
+        .summary-item {
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .summary-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .summary-item-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .summary-item-value {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .summary-item-value.primary { color: var(--color-primary); }
+        .summary-item-value.secondary { color: var(--color-secondary); }
+        .summary-item-value.success { color: var(--color-success); }
+
+        .summary-item-desc {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            margin-top: var(--space-xs);
+        }
+
+        /* ========================================
+           TABLES
+        ======================================== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: var(--space-md) 0;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+            background: var(--color-bg-white);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        thead {
+            background: var(--color-bg-elevated);
+        }
+
+        th {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--color-text-heading);
+            text-align: left;
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid var(--color-border);
+            white-space: nowrap;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        td {
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid var(--color-border-light);
+            vertical-align: middle;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: var(--color-bg-elevated);
+        }
+
+        /* Table Status Indicators */
+        .status-yes {
+            color: var(--color-success);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .status-no {
+            color: var(--color-danger);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .status-partial {
+            color: var(--color-warning);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .badge-must {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--color-danger);
+        }
+
+        .badge-should {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--color-warning);
+        }
+
+        .badge-could {
+            background: var(--color-secondary-subtle);
+            color: var(--color-secondary);
+        }
+
+        .badge-included {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--color-success);
+        }
+
+        .badge-phase2 {
+            background: var(--color-primary-subtle);
+            color: var(--color-primary);
+        }
+
+        .badge-phase3 {
+            background: var(--color-bg-elevated);
+            color: var(--color-text-secondary);
+        }
+
+        /* ========================================
+           CUSTOM TIMELINE/ROADMAP
+        ======================================== */
+        .roadmap-container {
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin: var(--space-xl) 0;
+            overflow-x: auto;
+        }
+
+        .timeline-header {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xl);
+            margin-left: 140px;
+        }
+
+        .timeline-quarter {
+            text-align: center;
+            padding: var(--space-md);
+            background: var(--color-bg-elevated);
+            border-radius: var(--radius-md);
+        }
+
+        .quarter-label {
+            display: block;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--color-text-heading);
+        }
+
+        .quarter-months {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            margin-top: var(--space-xs);
+        }
+
+        .timeline-phase {
+            display: flex;
+            margin-bottom: var(--space-lg);
+            align-items: flex-start;
+        }
+
+        .phase-label {
+            width: 130px;
+            flex-shrink: 0;
+            padding-right: var(--space-md);
+        }
+
+        .phase-badge {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-xs);
+        }
+
+        .phase-name {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--color-text-heading);
+        }
+
+        .phase-1-label .phase-badge { color: var(--color-primary); }
+        .phase-2-label .phase-badge { color: var(--color-secondary); }
+        .phase-3-label .phase-badge { color: var(--color-success); }
+
+        .phase-tracks {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .track-row {
+            height: 36px;
+            position: relative;
+            background: var(--color-bg-elevated);
+            border-radius: var(--radius-sm);
+        }
+
+        .track-bar {
+            position: absolute;
+            top: 2px;
+            bottom: 2px;
+            left: calc(var(--start) * 2.38%);
+            width: calc(var(--duration) * 2.38%);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-sm);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 500;
+            overflow: hidden;
+            min-width: 120px;
+        }
+
+        .phase-1-bar { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+        .phase-2-bar { background: linear-gradient(135deg, var(--color-secondary) 0%, #6D28D9 100%); }
+        .phase-3-bar { background: linear-gradient(135deg, var(--color-success) 0%, #059669 100%); }
+
+        .track-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+        }
+
+        .track-dates {
+            font-size: 0.65rem;
+            opacity: 0.85;
+            white-space: nowrap;
+            margin-left: var(--space-sm);
+        }
+
+        .timeline-legend {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: var(--radius-sm);
+        }
+
+        .phase-1-color { background: var(--color-primary); }
+        .phase-2-color { background: var(--color-secondary); }
+        .phase-3-color { background: var(--color-success); }
+
+        @media (max-width: 900px) {
+            .timeline-header {
+                margin-left: 0;
+                margin-bottom: var(--space-md);
+            }
+
+            .timeline-phase {
+                flex-direction: column;
+            }
+
+            .phase-label {
+                width: 100%;
+                margin-bottom: var(--space-sm);
+                padding-right: 0;
+            }
+
+            .track-bar {
+                position: relative;
+                left: 0;
+                width: 100%;
+            }
+
+            .timeline-legend {
+                flex-direction: column;
+                align-items: center;
+                gap: var(--space-sm);
+            }
+        }
+
+        /* ========================================
+           DIAGRAMS
+        ======================================== */
+        .diagram-container {
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin: var(--space-xl) 0;
+            overflow-x: auto;
+        }
+
+        .diagram-title {
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-text-heading);
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .diagram-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--color-primary);
+            border-radius: 2px;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+
+        /* ========================================
+           KPI GRID
+        ======================================== */
+        .kpi-section-title {
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .kpi-section-title.primary { color: var(--color-primary); }
+        .kpi-section-title.secondary { color: var(--color-secondary); }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .kpi-card {
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            transition: all 0.2s ease;
+        }
+
+        .kpi-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .kpi-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .kpi-value {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--color-text-heading);
+            line-height: 1;
+        }
+
+        .kpi-change {
+            font-size: 0.75rem;
+            color: var(--color-success);
+            margin-top: var(--space-xs);
+            font-weight: 500;
+        }
+
+        /* ========================================
+           PHASE CARDS
+        ======================================== */
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin: var(--space-xl) 0;
+        }
+
+        .phase-card {
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .phase-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .phase-card.phase-1::before { background: var(--color-primary); }
+        .phase-card.phase-2::before { background: var(--color-secondary); }
+        .phase-card.phase-3::before { background: var(--color-success); }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .phase-number {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .phase-card.phase-1 .phase-number { color: var(--color-primary); }
+        .phase-card.phase-2 .phase-number { color: var(--color-secondary); }
+        .phase-card.phase-3 .phase-number { color: var(--color-success); }
+
+        .phase-timeline {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+        }
+
+        .phase-title {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--color-text-heading);
+            margin-bottom: var(--space-xs);
+        }
+
+        .phase-deliverables {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        .phase-criteria {
+            font-size: 0.8rem;
+            padding: var(--space-md);
+            background: var(--color-bg-elevated);
+            border-radius: var(--radius-sm);
+            color: var(--color-text);
+        }
+
+        .phase-criteria strong {
+            color: var(--color-text-heading);
+        }
+
+        /* ========================================
+           RISK ITEMS
+        ======================================== */
+        .risk-grid {
+            display: grid;
+            gap: var(--space-md);
+            margin: var(--space-md) 0;
+        }
+
+        .risk-item {
+            display: grid;
+            grid-template-columns: auto 1fr 2fr;
+            gap: var(--space-lg);
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .risk-item {
+                grid-template-columns: 1fr;
+                gap: var(--space-sm);
+            }
+        }
+
+        .risk-icon {
+            font-size: 1.5rem;
+        }
+
+        .risk-label {
+            font-weight: 600;
+            color: var(--color-text-heading);
+            font-size: 0.875rem;
+        }
+
+        .risk-trigger {
+            font-size: 0.8rem;
+            color: var(--color-warning);
+            font-weight: 500;
+        }
+
+        .risk-response {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        /* ========================================
+           FEATURE LIST
+        ======================================== */
+        .feature-list {
+            list-style: none;
+            margin: var(--space-md) 0;
+        }
+
+        .feature-list li {
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--color-border-light);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            background: var(--color-primary-subtle);
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        .feature-list li strong {
+            color: var(--color-text-heading);
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+        .footer {
+            margin-top: var(--space-3xl);
+            padding: var(--space-xl);
+            background: var(--color-bg-dark);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        }
+
+        .footer-note {
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 0.9rem;
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 6rem var(--space-md) var(--space-2xl);
+            }
+
+            .main {
+                padding: var(--space-md);
+            }
+
+            .card {
+                padding: var(--space-lg);
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-sm);
+            }
+
+            th, td {
+                padding: var(--space-sm) var(--space-md);
+                font-size: 0.8rem;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .phase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========================================
+           ANIMATIONS
+        ======================================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        /* ========================================
+           ACCESSIBILITY
+        ======================================== */
+        :focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navegación -->
+    <nav class="nav" role="navigation" aria-label="Navegación principal">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <div class="nav-logo-icon">S</div>
+                SIMETRIK
+            </a>
+            <ul class="nav-links">
+                <li><a href="#resumen">Resumen</a></li>
+                <li><a href="#mercado">Mercado</a></li>
+                <li><a href="#solucion">Solución</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#lanzamiento">Lanzamiento</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="hero-badge">Memo Estratégico de Producto</div>
+            <h1>Monitor Continuo de <span class="highlight">Cumplimiento SOX</span></h1>
+            <p class="hero-subtitle">Plataforma de Inteligencia Financiera impulsada por IA — Transformando el testing trimestral reactivo en monitoreo continuo y preventivo en tiempo real</p>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="main" role="main">
+
+        <!-- 1. Resumen Ejecutivo -->
+        <section class="section" id="resumen" aria-labelledby="section-1-title">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 id="section-1-title">Resumen Ejecutivo</h2>
+            </div>
+
+            <div class="executive-summary">
+                <h4>TL;DR</h4>
+                <p><strong>El Problema:</strong> Los procesos de cierre financiero permanecen atrapados en ciclos de muestreo trimestral, con el 70% del tiempo de los equipos SOX dedicado a recolección de evidencia en lugar de análisis de riesgo real. Los desajustes GL-Subledger —la causa #1 de retrasos en el cierre— se descubren típicamente en el Día 3-4, forzando reaperturas de período y sobrecostos de auditoría.</p>
+                <p style="margin-top: var(--space-md);"><strong>Nuestra Solución:</strong> Un monitor de cumplimiento continuo impulsado por IA que analiza el 100% de las transacciones en tiempo real, reemplazando el testing trimestral reactivo con detección preventiva y siempre activa. El sistema aprovecha los datos operativos existentes de Simetrik para identificar deficiencias de control <em>antes</em> de que se conviertan en debilidades materiales.</p>
+                <p style="margin-top: var(--space-md);"><strong>Impacto de Negocio:</strong> Posiciona a Simetrik como el socio definitivo de cumplimiento para empresas pre-IPO expandiéndose al mercado estadounidense.</p>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-item-label">Reducción Tiempo de Cierre</div>
+                    <div class="summary-item-value success">-40%</div>
+                    <div class="summary-item-desc">8+ días → 3-5 días</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-item-label">Horas Prep. Auditoría</div>
+                    <div class="summary-item-value primary">-60%</div>
+                    <div class="summary-item-desc">200+ → 50-80 hrs/año</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-item-label">Cobertura de Testing</div>
+                    <div class="summary-item-value secondary">100%</div>
+                    <div class="summary-item-desc">vs. 5-10% muestreo</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-item-label">Documentación</div>
+                    <div class="summary-item-value" style="font-size: 1.25rem; color: var(--color-text-heading);">Auto-generada</div>
+                    <div class="summary-item-desc">Impulsada por GenAI</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Contexto de Mercado -->
+        <section class="section" id="mercado" aria-labelledby="section-2-title">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 id="section-2-title">Contexto de Mercado y Oportunidad</h2>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top: 0;">Puntos de Dolor del Usuario Validados</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Punto de Dolor</th>
+                                <th>Evidencia</th>
+                                <th>Costo de Negocio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Desajuste GL-Subledger</strong></td>
+                                <td>Causa #1 de retrasos en el cierre</td>
+                                <td>Reaperturas de período, reportes tardíos</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Carga administrativa</strong></td>
+                                <td>70% del tiempo SOX en recolección de evidencia</td>
+                                <td>Burnout del equipo, rotación</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Detección reactiva</strong></td>
+                                <td>Issues encontrados en Día 3-4 del cierre</td>
+                                <td>Retrabajo, extensiones de auditoría</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Presión del CFO</strong></td>
+                                <td>Encuestas muestran urgencia por soluciones IA</td>
+                                <td>Disposición a pagar premium</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3>Matriz de Análisis Competitivo</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>BlackLine</th>
+                            <th>Trintech</th>
+                            <th>FloQast</th>
+                            <th style="background: var(--color-primary-subtle);">SIMETRIK</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Enfoque de IA</strong></td>
+                            <td><span class="status-partial">⚠️ Análisis post-facto</span></td>
+                            <td><span class="status-no">❌ Básico (sin GenAI)</span></td>
+                            <td><span class="status-partial">⚠️ Agentes de tareas</span></td>
+                            <td><span class="status-yes">✅ Continuo + Preventivo</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Monitor SOX Específico</strong></td>
+                            <td><span class="status-no">❌ Sin solución integrada</span></td>
+                            <td><span class="status-partial">⚠️ CoPilot limitado</span></td>
+                            <td><span class="status-no">❌ Sin foco SOX</span></td>
+                            <td><span class="status-yes">✅ Scoring SOX nativo</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Especialización Banking/Fintech</strong></td>
+                            <td><span class="status-partial">⚠️ Generalista enterprise</span></td>
+                            <td><span class="status-partial">⚠️ Generalista enterprise</span></td>
+                            <td><span class="status-no">❌ Foco SMB</span></td>
+                            <td><span class="status-yes">✅ Experto en alto volumen</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tiempo a Valor</strong></td>
+                            <td><span class="status-no">❌ Meses (impl. compleja)</span></td>
+                            <td><span class="status-no">❌ Meses</span></td>
+                            <td><span class="status-partial">⚠️ Semanas</span></td>
+                            <td><span class="status-yes">✅ Semanas (integración existente)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Documentación de Evidencia</strong></td>
+                            <td><span class="status-partial">⚠️ Manual + templates</span></td>
+                            <td><span class="status-no">❌ Manual</span></td>
+                            <td><span class="status-partial">⚠️ Automatización parcial</span></td>
+                            <td><span class="status-yes">✅ Auto-generada con GenAI</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Modelo de Pricing</strong></td>
+                            <td><span class="status-no">❌ Premium ($$$)</span></td>
+                            <td><span class="status-no">❌ Premium ($$)</span></td>
+                            <td><span class="status-partial">⚠️ Mid-market</span></td>
+                            <td><span class="status-yes">✅ Competitivo + upsell modular</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card card-highlight" style="margin-top: var(--space-xl);">
+                <h3 style="margin-top: 0;">Diferenciación Estratégica</h3>
+                <ul class="feature-list">
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <div><strong>SOX-first dentro del Close Management:</strong> Scoring de controles + predicción de deficiencias + alertas inteligentes de certificación</div>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <div><strong>Big Data Transaccional:</strong> Conciliaciones operativas + cierre contable + posteo de asientos = trazabilidad completa</div>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <div><strong>Foco Enterprise Pre-IPO:</strong> Fuerte posicionamiento en este segmento para apalancar adopción</div>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <div><strong>Potencial Partnership Big 4:</strong> Auditores como advocates de la solución impulsando referrals</div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 3. Solución de IA -->
+        <section class="section" id="solucion" aria-labelledby="section-3-title">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 id="section-3-title">Solución de IA y Arquitectura Técnica</h2>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top: 0;">Portfolio de Técnicas de IA</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Técnica de IA</th>
+                                <th>Aplicación</th>
+                                <th>Valor de Negocio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Motor de Comparación en Tiempo Real (ML)</strong></td>
+                                <td>Comparación continua de conciliaciones, asientos y saldos</td>
+                                <td>Identificación de gaps en tiempo real</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Clasificación de Causa Raíz (ML)</strong></td>
+                                <td>Auto-categoriza diferencias: timing, error de integración, posting faltante, cutoff</td>
+                                <td>Investigación acelerada</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Análisis de Series Temporales (ML)</strong></td>
+                                <td>Detecta cambios de tendencias críticas que afectan integridad de saldos</td>
+                                <td>Gestión proactiva de riesgos</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Análisis de Ruta Crítica (ML)</strong></td>
+                                <td>Identificación dinámica de tareas en el critical path del cierre</td>
+                                <td>Dashboard semáforo SOX</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Chat Agéntico (GenAI + NLP)</strong></td>
+                                <td>Explicaciones auto-generadas para varianzas y debilidades materiales potenciales</td>
+                                <td>Insights self-service</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Flujo de Arquitectura de Datos</div>
+                <div class="mermaid">
+flowchart LR
+    subgraph ING["📥 Ingesta de Datos"]
+        ERP["Sistemas ERP"]
+        SUB["Subledgers"]
+        REC["Datos de Conciliación"]
+    end
+
+    subgraph PROC["⚙️ Procesamiento"]
+        ANON["Anonimización PII\nk-anonymity ≥5"]
+        LAKE["Data Lakehouse"]
+        FEAT["Feature Engineering"]
+    end
+
+    subgraph AI["🤖 Modelos de IA"]
+        ANOM["Detección de Anomalías\nIsolation Forest"]
+        RISK["Scoring de Riesgo\nXGBoost"]
+        ROOT["Clasificación\nCausa Raíz"]
+        GEN["Explicaciones GenAI\nRAG"]
+    end
+
+    subgraph VAL["👤 Human-in-the-Loop"]
+        SHADOW["Shadow Mode\nValidación"]
+        FEED["Feedback Usuario"]
+        AUDIT["Audit Trail"]
+    end
+
+    subgraph OUT["📊 Interfaz Usuario"]
+        DASH["Dashboard de Riesgo"]
+        ALERT["Alertas Inteligentes"]
+        DRILL["Drill-down"]
+    end
+
+    ERP --> ANON
+    SUB --> ANON
+    REC --> ANON
+    ANON --> LAKE
+    LAKE --> FEAT
+    FEAT --> ANOM
+    FEAT --> RISK
+    FEAT --> ROOT
+    ANOM --> SHADOW
+    RISK --> SHADOW
+    ROOT --> GEN
+    SHADOW --> FEED
+    FEED --> DASH
+    ANOM --> ALERT
+    ROOT --> DRILL
+    GEN --> DRILL
+    AUDIT --> DASH
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top: 0;">Controles de Privacidad y Cumplimiento de Datos</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Control</th>
+                                <th>Implementación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Anonimización</strong></td>
+                                <td>k-anonymity (k≥5) + differential privacy; nombres de cuentas/vendors/clientes hasheados</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Segregación</strong></td>
+                                <td>Modelos tenant-specific: datos nunca salen del tenant. Cross-client usa solo features agregados</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Consentimiento</strong></td>
+                                <td>Opt-in explícito para cross-client learning; DPA actualizado; derechos de eliminación GDPR Art. 17</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Auditoría</strong></td>
+                                <td>Logging completo de accesos; retención de lineage modelo-a-datos; compliance SOC 2 Type II</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Residencia</strong></td>
+                                <td>Datos USA en región USA; datos Latam en región Latam; región neutral para cross-client</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Roadmap -->
+        <section class="section" id="roadmap" aria-labelledby="section-4-title">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 id="section-4-title">Priorización y Roadmap</h2>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top: 0;">Matriz de Priorización (MoSCoW + RICE)</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Req</th>
+                                <th>Funcionalidad</th>
+                                <th>MoSCoW</th>
+                                <th>RICE</th>
+                                <th>Estado MVP</th>
+                                <th>Justificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>RF-01</strong></td>
+                                <td>Dashboard de Scoring de Riesgo</td>
+                                <td><span class="badge badge-must">MUST</span></td>
+                                <td>150</td>
+                                <td><span class="badge badge-included">✅ MVP</span></td>
+                                <td>Base de toda la UX</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-03</strong></td>
+                                <td>Drill-down a Transacciones</td>
+                                <td><span class="badge badge-must">MUST</span></td>
+                                <td>150</td>
+                                <td><span class="badge badge-included">✅ MVP</span></td>
+                                <td>Requisito SOX obligatorio</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-02</strong></td>
+                                <td>Alertas de Anomalías</td>
+                                <td><span class="badge badge-must">MUST</span></td>
+                                <td>90</td>
+                                <td><span class="badge badge-included">✅ MVP</span></td>
+                                <td>Valor core de IA; Isolation Forest</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-04</strong></td>
+                                <td>Audit Trail</td>
+                                <td><span class="badge badge-must">MUST</span></td>
+                                <td>N/A</td>
+                                <td><span class="badge badge-included">✅ MVP</span></td>
+                                <td>Requisito regulatorio</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-05</strong></td>
+                                <td>Explicaciones IA (GenAI)</td>
+                                <td><span class="badge badge-should">SHOULD</span></td>
+                                <td>40</td>
+                                <td><span class="badge badge-phase2">⏳ Fase 2</span></td>
+                                <td>Diferenciador; enfoque RAG</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-06</strong></td>
+                                <td>Pronóstico de Cierre</td>
+                                <td><span class="badge badge-should">SHOULD</span></td>
+                                <td>28</td>
+                                <td><span class="badge badge-phase2">⏳ Fase 2</span></td>
+                                <td>Alta incertidumbre ML</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RF-07</strong></td>
+                                <td>Auto-certificación</td>
+                                <td><span class="badge badge-could">COULD</span></td>
+                                <td>28</td>
+                                <td><span class="badge badge-phase3">❌ Fase 3</span></td>
+                                <td>Requiere track record probado</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Roadmap Timeline - Custom Component -->
+            <div class="roadmap-container">
+                <div class="diagram-title">Roadmap de Implementación</div>
+                
+                <!-- Timeline Header -->
+                <div class="timeline-header">
+                    <div class="timeline-quarter">
+                        <span class="quarter-label">Q1 2025</span>
+                        <span class="quarter-months">Ene - Mar</span>
+                    </div>
+                    <div class="timeline-quarter">
+                        <span class="quarter-label">Q2 2025</span>
+                        <span class="quarter-months">Abr - Jun</span>
+                    </div>
+                    <div class="timeline-quarter">
+                        <span class="quarter-label">Q3 2025</span>
+                        <span class="quarter-months">Jul - Sep</span>
+                    </div>
+                </div>
+
+                <!-- Phase 1 -->
+                <div class="timeline-phase">
+                    <div class="phase-label phase-1-label">
+                        <span class="phase-badge">Fase 1</span>
+                        <span class="phase-name">Detección</span>
+                    </div>
+                    <div class="phase-tracks">
+                        <div class="track-row">
+                            <div class="track-bar phase-1-bar" style="--start: 0; --duration: 4;">
+                                <span class="track-name">Data Lakehouse y Pipelines</span>
+                                <span class="track-dates">Ene 6 - Feb 2</span>
+                            </div>
+                        </div>
+                        <div class="track-row">
+                            <div class="track-bar phase-1-bar" style="--start: 0; --duration: 3;">
+                                <span class="track-name">RF-04 Audit Trail</span>
+                                <span class="track-dates">Ene 6 - Ene 26</span>
+                            </div>
+                        </div>
+                        <div class="track-row">
+                            <div class="track-bar phase-1-bar" style="--start: 4; --duration: 4;">
+                                <span class="track-name">RF-01 Dashboard de Riesgo</span>
+                                <span class="track-dates">Feb 3 - Mar 2</span>
+                            </div>
+                        </div>
+                        <div class="track-row">
+                            <div class="track-bar phase-1-bar" style="--start: 4; --duration: 5;">
+                                <span class="track-name">RF-02 Detección de Anomalías</span>
+                                <span class="track-dates">Feb 3 - Mar 9</span>
+                            </div>
+                        </div>
+                        <div class="track-row">
+                            <div class="track-bar phase-1-bar" style="--start: 8; --duration: 3;">
+                                <span class="track-name">RF-03 Drill-down</span>
+                                <span class="track-dates">Mar 3 - Mar 23</span>
+                            </div>
+                        </div>
+                        <div class="track-row">
+                            <div class="track-bar phase-1-bar" style="--start: 9; --duration: 3;">
+                                <span class="track-name">Validación Shadow Mode</span>
+                                <span class="track-dates">Mar 10 - Mar 30</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="timeline-phase">
+                    <div class="phase-label phase-2-label">
+                        <span class="phase-badge">Fase 2</span>
+                        <span class="phase-name">Análisis</span>
+                    </div>
+                    <div class="phase-tracks">
+                        <div class="track-row">
+                            <div class="track-bar phase-2-bar" style="--start: 12; --duration: 6;">
+                                <span class="track-name">RF-05 Explicaciones GenAI</span>
+                                <span class="track-dates">Abr 1 - May 12</span>
+                            </div>
+                        </div>
+                        <div class="track-row">
+                            <div class="track-bar phase-2-bar" style="--start: 12; --duration: 6;">
+                                <span class="track-name">RF-06 Pronóstico de Cierre</span>
+                                <span class="track-dates">Abr 1 - May 12</span>
+                            </div>
+                        </div>
+                        <div class="track-row">
+                            <div class="track-bar phase-2-bar" style="--start: 18; --duration: 4;">
+                                <span class="track-name">Feedback Human-in-the-Loop</span>
+                                <span class="track-dates">May 13 - Jun 9</span>
+                            </div>
+                        </div>
+                        <div class="track-row">
+                            <div class="track-bar phase-2-bar" style="--start: 22; --duration: 4;">
+                                <span class="track-name">Release Piloto Controlado</span>
+                                <span class="track-dates">Jun 10 - Jul 7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="timeline-phase">
+                    <div class="phase-label phase-3-label">
+                        <span class="phase-badge">Fase 3</span>
+                        <span class="phase-name">Automatización</span>
+                    </div>
+                    <div class="phase-tracks">
+                        <div class="track-row">
+                            <div class="track-bar phase-3-bar" style="--start: 26; --duration: 6;">
+                                <span class="track-name">RF-07 Auto-certificación</span>
+                                <span class="track-dates">Jul 1 - Ago 11</span>
+                            </div>
+                        </div>
+                        <div class="track-row">
+                            <div class="track-bar phase-3-bar" style="--start: 32; --duration: 6;">
+                                <span class="track-name">Workflows Agénticos</span>
+                                <span class="track-dates">Ago 12 - Sep 22</span>
+                            </div>
+                        </div>
+                        <div class="track-row">
+                            <div class="track-bar phase-3-bar" style="--start: 38; --duration: 4;">
+                                <span class="track-name">Ring Deployment GA</span>
+                                <span class="track-dates">Sep 23 - Oct 20</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="timeline-legend">
+                    <div class="legend-item">
+                        <span class="legend-color phase-1-color"></span>
+                        <span>Fase 1: Detección (MUST)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color phase-2-color"></span>
+                        <span>Fase 2: Análisis (SHOULD)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color phase-3-color"></span>
+                        <span>Fase 3: Automatización (COULD)</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Resumen de Objetivos por Fase</h3>
+            <div class="phase-grid">
+                <div class="phase-card phase-1">
+                    <div class="phase-header">
+                        <span class="phase-number">Fase 1: Detección</span>
+                        <span class="phase-timeline">Q1 2025</span>
+                    </div>
+                    <div class="phase-title">Requisitos MUST</div>
+                    <div class="phase-deliverables">Dashboard + Alertas + Audit Trail</div>
+                    <div class="phase-criteria">
+                        <strong>Criterios de Éxito:</strong> 100% ingesta de transacciones con latencia &lt;5min; FPR &lt;5%
+                    </div>
+                </div>
+                <div class="phase-card phase-2">
+                    <div class="phase-header">
+                        <span class="phase-number">Fase 2: Análisis</span>
+                        <span class="phase-timeline">Q2 2025</span>
+                    </div>
+                    <div class="phase-title">Requisitos SHOULD</div>
+                    <div class="phase-deliverables">Explicaciones GenAI + Pronóstico de Cierre</div>
+                    <div class="phase-criteria">
+                        <strong>Criterios de Éxito:</strong> Tasa de aceptación usuario ≥70%; Precisión pronóstico ±1 día
+                    </div>
+                </div>
+                <div class="phase-card phase-3">
+                    <div class="phase-header">
+                        <span class="phase-number">Fase 3: Automatización</span>
+                        <span class="phase-timeline">Q3 2025</span>
+                    </div>
+                    <div class="phase-title">Requisitos COULD</div>
+                    <div class="phase-deliverables">Auto-certificación + GA Completo</div>
+                    <div class="phase-criteria">
+                        <strong>Criterios de Éxito:</strong> Cero debilidades materiales post-implementación
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Lanzamiento y Ejecución -->
+        <section class="section" id="lanzamiento" aria-labelledby="section-5-title">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2 id="section-5-title">Lanzamiento, Riesgo y Ejecución Ágil</h2>
+            </div>
+
+            <div class="card card-highlight">
+                <h3 style="margin-top: 0;">Estrategia de Lanzamiento: Despliegue Progresivo</h3>
+                <p style="margin-bottom: var(--space-lg);">Rechazamos los lanzamientos "Big Bang". En entornos SOX/auditoría, <strong>la confianza es la moneda más valiosa</strong>—una primera semana ruidosa daña permanentemente la adopción.</p>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fase</th>
+                                <th>Timeline</th>
+                                <th>Estrategia</th>
+                                <th>Criterios de Puerta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Fase 0: Dark Launch</strong></td>
+                                <td>Semanas 1-4</td>
+                                <td>IA corre en shadow; usuarios ven baseline basado en reglas</td>
+                                <td>FPR de IA &lt; FPR baseline en 1 ciclo de cierre completo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fase 1: Piloto Controlado</strong></td>
+                                <td>Semanas 5-8</td>
+                                <td>Etiqueta Beta; solo Power Users; recolección agresiva de feedback</td>
+                                <td>70% feedback positivo; respuesta a issues &lt;4hrs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fase 2: Ring Deployment</strong></td>
+                                <td>Semana 9+</td>
+                                <td>Ring 1: SMB → Ring 2: Enterprise → Ring 3: Todos</td>
+                                <td>Sin anomalías en Ring N antes de Ring N+1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top: 0;">Adaptación Ágil para Incertidumbre de IA</h3>
+                <ul class="feature-list">
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <div><strong>Ciclos Shape Up (6 semanas):</strong> "Apetitos" de tiempo fijos entregan módulos completos. Sin proyectos zombies—si la validación falla en 6 semanas, pivotar o eliminar.</div>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <div><strong>Track de Descubrimiento (20%):</strong> Validar viabilidad de datos con spikes de 2-4 días <em>antes</em> de construir</div>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <div><strong>Track de Entrega (80%):</strong> Construir solo enfoques validados; foco en cumplimiento regulatorio</div>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <div><strong>Definition of Done (Regulatorio):</strong> Ninguna feature sale sin logs inmutables, enmascaramiento PII y trazabilidad completa</div>
+                    </li>
+                </ul>
+            </div>
+
+            <h3>KPIs: Framework de Métricas Híbridas</h3>
+            
+            <div style="margin-bottom: var(--space-lg);">
+                <div class="kpi-section-title primary">📊 Métricas de Valor de Negocio</div>
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-label">Tiempo a Resolución</div>
+                        <div class="kpi-value">&lt;4h</div>
+                        <div class="kpi-change">↓ desde 3 días baseline</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Trust Score de IA</div>
+                        <div class="kpi-value">&gt;70%</div>
+                        <div class="kpi-change">Alertas aceptadas vs ignoradas</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Catch Rate</div>
+                        <div class="kpi-value">+10%</div>
+                        <div class="kpi-change">vs. ciclo de cierre anterior</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: var(--space-xl);">
+                <div class="kpi-section-title secondary">🤖 Métricas de Performance del Modelo</div>
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-label">Tasa Falsos Positivos</div>
+                        <div class="kpi-value">&lt;5%</div>
+                        <div class="kpi-change">Crítico para adopción</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Recall (Alto Valor)</div>
+                        <div class="kpi-value">&gt;90%</div>
+                        <div class="kpi-change">Costo de miss &gt;&gt; falso positivo</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Rating Explicabilidad</div>
+                        <div class="kpi-value">4+ ★</div>
+                        <div class="kpi-change">Rating usuario en GenAI</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top: 0;">Mitigación de Riesgos: Circuit Breakers</h3>
+                <div class="risk-grid">
+                    <div class="risk-item">
+                        <span class="risk-icon">🚨</span>
+                        <div>
+                            <div class="risk-label">Fallo del Modelo</div>
+                            <div class="risk-trigger">Alertas diarias &gt;200% del promedio histórico</div>
+                        </div>
+                        <div class="risk-response">IA deshabilitada; fallback instantáneo a reglas Z-Score</div>
+                    </div>
+                    <div class="risk-item">
+                        <span class="risk-icon">📊</span>
+                        <div>
+                            <div class="risk-label">Data Drift</div>
+                            <div class="risk-trigger">Shift de distribución de features &gt;15%</div>
+                        </div>
+                        <div class="risk-response">Alerta a MLOps; reentrenamiento programado disparado</div>
+                    </div>
+                    <div class="risk-item">
+                        <span class="risk-icon">⚖️</span>
+                        <div>
+                            <div class="risk-label">Detección de Sesgo</div>
+                            <div class="risk-trigger">F1-Score por cohorte debajo del umbral</div>
+                        </div>
+                        <div class="risk-response">Cohorte marcada para revisión específica</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top: 0;">Impacto de Negocio Esperado (Proyección 18 Meses)</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Métrica</th>
+                                <th>Driver</th>
+                                <th>Objetivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Win Rate Enterprise</strong></td>
+                                <td>Diferenciación en RFPs vs. Trintech/BlackLine</td>
+                                <td><span class="status-yes">+15% (25% → 40%)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Calificación de Pipeline</strong></td>
+                                <td>SOX compliance como filtro para enterprise USA</td>
+                                <td><span class="status-yes">+30% leads calificados</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tamaño del Deal (ACV)</strong></td>
+                                <td>Módulo IA como tier premium</td>
+                                <td><span class="status-yes">+25%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gross Churn</strong></td>
+                                <td>Switching costs (historial compliance + modelos)</td>
+                                <td><span class="status-yes">-25% (8% → 6%)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Net Revenue Retention</strong></td>
+                                <td>Upsell de IA + expansión de usuarios</td>
+                                <td><span class="status-yes">+15 pts (105% → 120%)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>NPS</strong></td>
+                                <td>Reducción de estrés en cierre + éxito en auditorías</td>
+                                <td><span class="status-yes">+15 pts (35 → 50)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-note">
+                Esta propuesta prioriza la <strong>Resiliencia y la Confianza</strong> sobre la velocidad. Utilizamos despliegue gradual para proteger la reputación del producto, mecanismos de fallback para garantizar la continuidad operativa, y el feedback del usuario como motor principal de mejora del modelo.
+            </p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Inicializar Mermaid con tema claro y colores Simetrik
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#E0F7F4',
+                primaryTextColor: '#111827',
+                primaryBorderColor: '#00BFA6',
+                lineColor: '#6B7280',
+                secondaryColor: '#F3E8FF',
+                tertiaryColor: '#F3F4F6',
+                background: '#FFFFFF',
+                mainBkg: '#E0F7F4',
+                secondBkg: '#F3F4F6',
+                border1: '#00BFA6',
+                border2: '#E5E7EB',
+                arrowheadColor: '#6B7280',
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '13px',
+                textColor: '#374151',
+                nodeTextColor: '#111827',
+                clusterBkg: '#F9FAFB',
+                clusterBorder: '#E5E7EB',
+                edgeLabelBackground: '#FFFFFF',
+                taskTextColor: '#FFFFFF',
+                taskTextOutsideColor: '#374151',
+                taskTextClickableColor: '#00BFA6',
+                activeTaskBorderColor: '#00BFA6',
+                activeTaskBkgColor: '#00BFA6',
+                gridColor: '#E5E7EB',
+                doneTaskBkgColor: '#10B981',
+                doneTaskBorderColor: '#059669',
+                critBorderColor: '#EF4444',
+                critBkgColor: '#FEE2E2',
+                todayLineColor: '#F59E0B',
+                sectionBkgColor: '#F0FDFA',
+                sectionBkgColor2: '#F5F3FF',
+                altSectionBkgColor: '#F9FAFB',
+                taskBkgColor: '#00BFA6',
+                taskBorderColor: '#00A896'
+            },
+            flowchart: {
+                htmlLabels: true,
+                curve: 'basis',
+                padding: 15,
+                nodeSpacing: 50,
+                rankSpacing: 50
+            },
+            gantt: {
+                titleTopMargin: 25,
+                barHeight: 28,
+                barGap: 6,
+                topPadding: 50,
+                leftPadding: 120,
+                gridLineStartPadding: 35,
+                fontSize: 12,
+                sectionFontSize: 13,
+                numberSectionStyles: 3
+            }
+        });
+
+        // Smooth scroll para navegación
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if (target) {
+                    const navHeight = document.querySelector('.nav').offsetHeight;
+                    const targetPosition = target.offsetTop - navHeight - 20;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animación de secciones al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            observer.observe(section);
+        });
+
+        // Estilo para animación
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                .section.animate-in {
+                    opacity: 1 !important;
+                    transform: translateY(0) !important;
+                }
+            </style>
+        `);
+    </script>
+
+</body>
+</html>
